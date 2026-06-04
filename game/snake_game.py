@@ -129,14 +129,18 @@ class SnakeGame:
         self.score = 0
 
     def get_state(self):
+        danger_left = self.snake_pos[0] - 10 < 0
+        danger_right = self.snake_pos[0] + 10 >= self.WIDTH
+        danger_up = self.snake_pos[1] - 10 < 0
+        danger_down = self.snake_pos[1] + 10 >= self.HEIGHT
         food_left = self.food_pos[0] < self.snake_pos[0]
         food_right = self.food_pos[0] > self.snake_pos[0]
         food_up =self.food_pos[1] < self.snake_pos[1]
         food_down = self.food_pos[1] > self.snake_pos[1]
 
-        return [food_left, food_right, food_up, food_down]
+        return [danger_left, danger_down, danger_up, danger_down, food_right, food_up, food_down]
 
-    
+
 
 
 
