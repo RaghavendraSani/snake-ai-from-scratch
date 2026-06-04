@@ -1,5 +1,3 @@
-from operator import truediv
-
 import pygame
 import random
 
@@ -28,8 +26,6 @@ class SnakeGame:
 
     def run (self):
         running = True
-        action = 1
-        self.step(action)
         while running:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
