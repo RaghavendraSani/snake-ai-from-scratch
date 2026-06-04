@@ -33,7 +33,9 @@ This project is being built step-by-step to understand every component of reinfo
 - [x] Added terminal state (`done`)
 - [x] Added `reset()`
 - [x] Started `get_state()`
-- [ ] Improve state representation
+- [x] Improve state representation
+- [x] Add danger detection
+- [x] Add and test a simple agent
 
 ### Phase 3: Learning Agent
 - [ ] Q-Learning implementation
@@ -95,6 +97,8 @@ snake-ai-from-scratch/
 │   └── snake_game.py
 │
 ├── ai/
+│   └──rule_agent.py
+│
 ├── assets/
 ├── utils/
 │

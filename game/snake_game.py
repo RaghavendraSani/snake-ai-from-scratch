@@ -1,3 +1,4 @@
+from ai.rule_agent import RuleAgent
 import pygame
 import random
 
@@ -24,6 +25,10 @@ class SnakeGame:
         self.score = 0
         self.font = pygame.font.SysFont("Arial", 20)
 
+        self.agent = RuleAgent()
+
+        self.grow = False
+
     def run (self):
         running = True
         while running:
@@ -31,12 +36,13 @@ class SnakeGame:
                 if event.type == pygame.QUIT:
                     running = False
 
-            action = 1
-            state, food, reward, done = self.step(action)
             state = self.get_state()
+            action = self.agent.get_action(state)
+            state, food, reward, done = self.step(action)
 
             if done:
                 self.reset()
+            print("Reward: ", reward, "Done: ", done)
 
             # drawing:
 
@@ -89,11 +95,14 @@ class SnakeGame:
 
         #body update
         self.snake_body.insert(0, list(self.snake_pos))
-        self.snake_body.pop()
+        if not self.grow:
+            self.snake_body.pop()
+        else:
+            self.grow = False
 
         #food collision
         if self.snake_pos == self.food_pos:
-            self.snake_body.append(list(self.snake_body[-1]))
+            self.grow = True
             self.food_pos = [random.randrange(0, self.WIDTH, 10),
                              random.randrange(0, self.HEIGHT, 10)]
             self.score += 1
@@ -104,12 +113,16 @@ class SnakeGame:
                 self.snake_pos[0] >= self.WIDTH or
                 self.snake_pos[1] < 0 or
                 self.snake_pos[1] >= self.HEIGHT):
+            print("WALL COLLISION")
             reward = -10
             done = True
 
         #self collision
         for block in self.snake_body[1:]:
-            if block == self.snake_pos:
+            if block == self.snake_body[0]:
+                print("Head:", self.snake_pos)
+                print("Body:", self.snake_body)
+                print("SELF COLLISION DETECTED")
                 reward = -10
                 done = True
 
