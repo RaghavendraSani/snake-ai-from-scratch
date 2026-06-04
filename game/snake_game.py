@@ -38,8 +38,6 @@ class SnakeGame:
             action = 1
             state, food, reward, done = self.step(action)
             state = self.get_state()
-            print(state)
-            print(len(state))
 
             if done:
                 self.reset()
