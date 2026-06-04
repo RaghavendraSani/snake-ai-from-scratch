@@ -39,6 +39,7 @@ class SnakeGame:
             state, food, reward, done = self.step(action)
             state = self.get_state()
             print(state)
+            print(len(state))
 
             if done:
                 self.reset()
@@ -133,13 +134,13 @@ class SnakeGame:
     def get_state(self):
         left_pos = [self.snake_pos[0] - 10, self.snake_pos[1]]
         right_pos = [self.snake_pos[0] + 10, self.snake_pos[1]]
-        up__pos = [self.snake_pos[0], self.snake_pos[1] - 10]
-        down__pos = [self.snake_pos[0], self.snake_pos[1] + 10]
+        up_pos = [self.snake_pos[0], self.snake_pos[1] - 10]
+        down_pos = [self.snake_pos[0], self.snake_pos[1] + 10]
 
-        danger_left = self.snake_pos[0] - 10 < 0
-        danger_right = self.snake_pos[0] + 10 >= self.WIDTH
-        danger_up = self.snake_pos[1] - 10 < 0
-        danger_down = self.snake_pos[1] + 10 >= self.HEIGHT
+        danger_left = (left_pos[0] < 0 or left_pos in self.snake_body)
+        danger_right = (right_pos[0] >= self.WIDTH or right_pos in self.snake_body)
+        danger_up = (up_pos[1] < 0 or up_pos in self.snake_body)
+        danger_down = (down_pos[1] >= self.HEIGHT or down_pos in self.snake_body)
 
         food_left = self.food_pos[0] < self.snake_pos[0]
         food_right = self.food_pos[0] > self.snake_pos[0]
