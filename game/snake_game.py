@@ -18,8 +18,7 @@ class SnakeGame:
 
         self.direction = "RIGHT"
 
-        self.food_pos = [random.randrange(0, self.WIDTH, 10),
-                         random.randrange(0, self.HEIGHT, 10)]
+        self.food_pos = self.spawn_food()
 
         self.food_size = 10
         self.score = 0
@@ -42,7 +41,6 @@ class SnakeGame:
 
             if done:
                 self.reset()
-            print("Reward: ", reward, "Done: ", done)
 
             # drawing:
 
@@ -65,7 +63,7 @@ class SnakeGame:
             # update
             pygame.display.update()
 
-            self.clock.tick(10)
+            self.clock.tick(20)
 
         pygame.quit()
 
@@ -103,8 +101,7 @@ class SnakeGame:
         #food collision
         if self.snake_pos == self.food_pos:
             self.grow = True
-            self.food_pos = [random.randrange(0, self.WIDTH, 10),
-                             random.randrange(0, self.HEIGHT, 10)]
+            self.food_pos = self.spawn_food()
             self.score += 1
             reward = 10
 
@@ -113,16 +110,12 @@ class SnakeGame:
                 self.snake_pos[0] >= self.WIDTH or
                 self.snake_pos[1] < 0 or
                 self.snake_pos[1] >= self.HEIGHT):
-            print("WALL COLLISION")
             reward = -10
             done = True
 
         #self collision
         for block in self.snake_body[1:]:
             if block == self.snake_body[0]:
-                print("Head:", self.snake_pos)
-                print("Body:", self.snake_body)
-                print("SELF COLLISION DETECTED")
                 reward = -10
                 done = True
 
@@ -134,8 +127,7 @@ class SnakeGame:
         self.snake_body = [[100, 50]]
         self.direction = "RIGHT"
 
-        self.food_pos = [random.randrange(0, self.WIDTH, 10),
-                         random.randrange(0, self.HEIGHT, 10)]
+        self.food_pos = self.spawn_food()
         self.score = 0
 
     def get_state(self):
@@ -155,6 +147,16 @@ class SnakeGame:
         food_down = self.food_pos[1] > self.snake_pos[1]
 
         return [danger_left, danger_right, danger_up, danger_down, food_left, food_right, food_up, food_down]
+
+    def spawn_food(self):
+        while True:
+            food = [
+                random.randrange(0, self.WIDTH, 10),
+                random.randrange(0, self.HEIGHT, 10)
+            ]
+
+            if food not in self.snake_body:
+                return food
 
 
 
