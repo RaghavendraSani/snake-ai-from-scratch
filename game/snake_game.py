@@ -1,6 +1,8 @@
 from ai.rule_agent import RuleAgent
+from ai.neural_network import NeuralNetwork
 import pygame
 import random
+import numpy as np
 
 class SnakeGame:
     def __init__(self):
@@ -24,7 +26,7 @@ class SnakeGame:
         self.score = 0
         self.font = pygame.font.SysFont("Arial", 20)
 
-        self.agent = RuleAgent()
+        self.agent = NeuralNetwork()
 
         self.grow = False
 
@@ -35,7 +37,7 @@ class SnakeGame:
                 if event.type == pygame.QUIT:
                     running = False
 
-            state = self.get_state()
+            state = np.array([self.get_state()])
             action = self.agent.get_action(state)
             state, food, reward, done = self.step(action)
 
@@ -154,18 +156,5 @@ class SnakeGame:
                 random.randrange(0, self.WIDTH, 10),
                 random.randrange(0, self.HEIGHT, 10)
             ]
-
             if food not in self.snake_body:
                 return food
-
-
-
-
-
-
-
-
-
-
-
-

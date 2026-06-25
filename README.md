@@ -98,12 +98,12 @@ snake-ai-from-scratch/
 │
 ├── ai/
 │   └──rule_agent.py
-│
+│   └──neural_network.py
+│ 
 ├── assets/
 ├── utils/
-│
 ├── main.py
-├── README.md
+├── README.md 
 └── .gitignore
 ```
 
