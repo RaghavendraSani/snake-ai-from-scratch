@@ -44,8 +44,8 @@ class SnakeGame:
             if done:
                 self.reset()
 
-            # drawing:
 
+            # DRAWING:
             # screen
             self.screen.fill((0, 0, 0))
 

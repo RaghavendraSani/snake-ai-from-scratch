@@ -13,18 +13,40 @@ class NeuralNetwork:
         self.b2 = np.zeros((1,self.output_size))
 
     def forward(self,x):
-        hidden = np.dot(x, self.w1) + self.b1
-        output = np.dot(hidden, self.w2) + self.b2
-        return output
+        self.hidden = np.dot(x, self.w1) + self.b1
+        self.hidden = self.relu(self.hidden)
+        self.output = np.dot(self.hidden, self.w2) + self.b2
+        return self.output
+
+    def get_action(self, state):
+        output = self.forward(state)
+        action = np.argmax(output)
+        print(action)
+        return action
+    #    return np.argmax(output)
+
+    def relu(self, x):
+        return np.maximum(0, x)
+
+    def mse_loss(self, prediction, target):
+        return np.mean((prediction - target) ** 2)
 
 
 nn = NeuralNetwork()
-state = np.array([[0,1,0,0,0,1,0,0]])
-print(nn.forward(state))
 
+prediction = np.array([2, 5])
+target = np.array([2, 9])
+print(nn.mse_loss(prediction, target))
+
+"""
+test = np.array([[-4, 7, -1, 3, 0]])
+print(nn.relu(test))
+"""
+"""
 def get_action(self, state):
     output = self.forward(state)
     action = np.argmax(output)
     print(action)
     return action
-#    return np.argmax(output)
+    return np.argmax(output)
+"""
